@@ -1,0 +1,62 @@
+p{
+    font-size: 14px;
+}
+.container{
+    background-color: rgb(255, 255, 255);
+    padding-bottom: 10px;
+}
+.col{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(248, 252, 252, 0.966);
+    border: solid 1px rgb(241, 241, 241);
+    margin: 1px;
+    align-items: center;
+    width: 250px;
+}
+.date{
+    font-size: 18px;
+    font-weight: bold;
+}
+.temp{
+    color: rgb(247, 137, 48);
+    font-weight: bold;
+}
+img{
+    display: flex;
+}
+.prece{
+    color: rgb(48, 139, 235);
+}
+#first{
+    margin-top: 10px;
+    background-color: rgb(228, 222, 222);
+}
+.low{
+    color : rgb(255, 183, 0);
+    font-weight: bold;
+}
+.normal{
+    color: rgb(255, 119, 0);
+    font-weight: bold;
+}
+.high{
+    color : rgb(255, 77, 0);
+    font-weight: bold;
+}
+.VeryHigh{
+    color: rgb(155, 88, 6);
+    font-weight: bold;
+}
+img{
+    margin-bottom: 10px;
+}
+button{
+    width: 120px;
+}
+.bad_proba{
+    color: red;
+}
+.good_proba{
+    color: rgb(31, 242, 56);
+}

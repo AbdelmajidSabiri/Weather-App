@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="first">
+        <p>Meteo ESSAOUIRA</p>
+        <div class="container">
+            <p class="date">{{jour}}  {{date}}</p>
+            <div class="row">
+                {% for e in range(8) %}
+                    <div class="col">
+                        <p>{{DataMeteo[e]['temps']}}</p>
+                        <img src="{{ url_for('static', filename=DataMeteo[e]['image']) }}" height="60px">
+                        <p class="temp">{{DataMeteo[e]['temperature']}}°</p> 
+                        <p class="prece">{{DataMeteo[e]['precipitation']}}mm</p>
+                        <p>{{DataMeteo[e]['cloud']}}%</p>
+                        {% if DataMeteo[e]['wind']['max'] < 30 %}
+                            <p class="low">{{DataMeteo[e]['wind']["min"]}}-{{DataMeteo[e]['wind']["max"]}} Km/h</p>
+                        {% elif DataMeteo[e]['wind']['max'] < 40 %}
+                            <p class="normal">{{DataMeteo[e]['wind']["min"]}}-{{DataMeteo[e]['wind']["max"]}} Km/h</p>
+                        {% elif DataMeteo[e]['wind']['max'] < 50 %}
+                            <p class="high">{{DataMeteo[e]['wind']["min"]}}-{{DataMeteo[e]['wind']["max"]}} Km/h</p>
+                        {% elif DataMeteo[e]['wind']['max'] < 60 %}
+                            <p class="VeryHigh">{{DataMeteo[e]['wind']["min"]}}-{{DataMeteo[e]['wind']["max"]}} Km/h</p>
+                        {% endif %}
+                        {% if DataMeteo[e]['ListeH'] <= current %}
+                        <form id="formBad{{ e }}" action="/bad_condition/{{ e }}" method="POST">
+                            <input type="hidden" name="forecast_id" value="{{ DataMeteo[e]['id'] }}">
+                            <span id="messageBad{{ e }}"></span>
+                            <button id="badButton{{ e }}" class="btn btn-outline-danger" onclick="hideButtons('{{ e }}', 'bad')">Mauvaise</button>
+                        </form>
+                        
+                        <form id="formGood{{ e }}" action="/good_condition/{{ e }}" method="POST">
+                            <input type="hidden" name="forecast_id" value="{{ DataMeteo[e]['id'] }}">
+                            <span id="messageGood{{ e }}"></span>
+                            <button id="goodButton{{ e }}" class="btn btn-outline-success" onclick="hideButtons('{{ e }}', 'good')">Bonne</button>
+                        </form>  
+                        {% else %}
+                            <p class="bad_proba">PM : {{ "%.2f" % probabilities[e]["bad_proba"]}}</p>  
+                            <p class="good_proba">PB : {{"%.2f" % probabilities[e]["good_proba"]}}</p>             
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+<script>
+
+    for (let i = 0; i < 8; i++) {
+        if (sessionStorage.getItem("buttonsHidden" + i)) {
+            hideButtons(i);
+        }
+    }
+
+    function hideButtons(index, buttonType) {
+        document.getElementById("badButton" + index).style.display = "none";
+        document.getElementById("goodButton" + index).style.display = "none";
+
+        if (buttonType === "bad") {
+            document.getElementById("messageBad" + index).innerHTML = "<p>Thanks for your feedback! Hope it improves soon!</p>";
+        } else if (buttonType === "good") {
+            document.getElementById("messageGood" + index).innerHTML = "<p>Thanks for your feedback! Glad you're enjoying the weather</p>";
+        }
+        
+        sessionStorage.setItem("buttonsHidden" + index, true);
+    }
+</script>
+
+
+</body>
+</html>
+
+

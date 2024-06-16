@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <h1>Weather Forecasts</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>City</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Wind Speed</th>
+                <th>Good Condition</th>
+                <th>Bad Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for forecast in forecasts %}
+            <tr>
+                <td>{{ forecast.date }}</td>
+                <td>{{ forecast.city }}</td>
+                <td>{{ forecast.temperature }}</td>
+                <td>{{ forecast.humidity }}</td>
+                <td>{{ forecast.wind_speed }}</td>
+                <td>{{forecast.good_condition}}</td>
+                <td>{{forecast.bad_condition}}</td>
+                <td>{{ "Yes" if forecast.good_condition else "No" }}</td>
+                <td>{{ "Yes" if forecast.bad_condition else "No" }}</td>
+            </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+</body>
+</html>
