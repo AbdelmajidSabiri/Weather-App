@@ -19,7 +19,7 @@ def meteo():
         add_forecast(i)
 
     date = datetime.datetime.now().date() 
-    difference =  (date - datetime.date(2024, 5, 12)).days
+    difference =  (date - datetime.date(2024, 7, 1)).days
     all_forecasts = CalculProba.retrieve_weather_data()
     
     for id in range(8) :
@@ -50,7 +50,7 @@ def forecasts():
 def good_condition(id):
 
     date = datetime.datetime.now().date()
-    difference =  (date - datetime.date(2024, 5, 12)).days
+    difference =  (date - datetime.date(2024, 7, 1)).days
     
     forecast_id = (id+1) + difference * 8
     forecast = WeatherForecast.query.get_or_404(forecast_id)
@@ -63,7 +63,7 @@ def good_condition(id):
 def bad_condition(id):
 
     date = datetime.datetime.now().date()
-    start_date = datetime.date(2024, 5, 12)
+    start_date = datetime.date(2024, 7, 1)
     difference = (date - start_date).days
 
     forecast_id = (id+1) + difference * 8
